@@ -1,0 +1,89 @@
+<?php
+/**
+ * @file
+ * Convert given basic page node to json using api key.
+ * @author : Sunny.
+ */
+/**
+ * Implements hook_menu().
+ */
+function sak_menu() {
+  $menu['node_json/%'] = array(
+      'title' => 'Basic node to json',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('sak_logic'),
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+  );
+  return $menu;
+}
+/**
+ * Convert given node to its json value.
+ */
+function sak_logic() {
+  $arg = arg();
+  $access = FALSE;
+    // for URL node_json only
+  if ($arg[0] == 'node_json' && $arg[1] != NULL && is_numeric($arg[1])) {
+    if (variable_get('siteapikey') != '' and variable_get('siteapikey') != NULL ) {
+       $key = variable_get('siteapikey');
+       if(isset($_GET['key']) and  $key==$_GET['key']){
+         if ($node = node_load ($arg[1]) ) {
+            // Should be 'Page' content type only and should be published.
+            if ( $node->type == 'page' && ($node->status ==1) ) {
+              // Display JSON data of given node
+              drupal_add_http_header('Content-Type', 'application/json');
+              if (isset($node)) {
+                echo drupal_json_encode($node);
+                exit();
+                $access = TRUE;
+              }
+            }   
+         }
+      }
+      else
+      {
+        drupal_set_message('Access Denied' , 'error');
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function sak_form_alter(&$form, &$form_state, $form_id) {
+  if ( $form_id == 'system_site_information_settings' ) {
+       // Textbox for API secret key
+    $form['site_information']['siteapikey'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Site API Key'),
+      '#default_value' => variable_get('siteapikey', 'Enter API Key yet'),
+      '#description' => t('Enter your API key here.'),
+      '#required' => FALSE,
+      '#attributes' => array(
+        'placeholder' => t('Enter API Key yet')
+      ),
+    );
+
+    // If API Key value already set then Update Configuration.
+    if ( variable_get('siteapikey') != NULL ) {
+      $form['actions']['submit']['#value'] = t('Update Configuration');
+    }
+
+    // adding custom form submit in form.
+    $form['#submit'][] = 'sak_settings_form_submit';
+
+  }
+  return system_settings_form($form);
+}
+/**
+ * Form submit for sak_settings_form_submit.
+ */
+function sak_settings_form_submit(&$form, &$form_state) {
+  // Set Drupal set meeage when field is saved.
+  if ($form_state['values']['siteapikey'] != NULL || $form_state['values']['siteapikey'] != ''){
+      $message = t('Site API Key has been saved');
+      drupal_set_message($message);
+   }
+}

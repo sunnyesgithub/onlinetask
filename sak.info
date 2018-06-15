@@ -1,0 +1,5 @@
+name = Site Api Key
+description = Basic page node to json using custom API key
+package = Custom
+core = 7.x
+
