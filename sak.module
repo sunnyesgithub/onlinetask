@@ -60,7 +60,7 @@ function sak_form_alter(&$form, &$form_state, $form_id) {
       '#title' => t('Site API Key'),
       '#default_value' => variable_get('siteapikey', 'Enter API Key yet'),
       '#description' => t('Enter your API key here.'),
-      '#required' => FALSE,
+      '#required' => TRUE,
       '#attributes' => array(
         'placeholder' => t('Enter API Key yet')
       ),
