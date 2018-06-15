@@ -37,5 +37,6 @@ https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hoo
 https://www.drupal.org/forum/support/module-development-and-code-questions/2010-04-06/solved-hooking-into-system_settings
 https://api.drupal.org/api/drupal/modules%21system%21system.module/function/system_settings_form/7.x
 https://www.drupal.org/docs/7/api/form-api
+https://api.drupal.org/api/drupal/includes%21common.inc/function/drupal_json_output/7.x
 
 
