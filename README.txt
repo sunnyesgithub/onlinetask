@@ -5,7 +5,7 @@ Basic page node to json
 CREDITS
 --------
 Developed by Sunny Singh Sharma <infoofsunnysharma@gmail.com>
-https://api.drupal.org/user/705438
+https://www.drupal.org/u/sunnydrupal
 
 JSON Encode URL
 -----------------
