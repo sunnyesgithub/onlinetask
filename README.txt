@@ -10,7 +10,7 @@ https://www.drupal.org/u/sunnydrupal
 JSON Encode URL
 -----------------
 URL : http://domain_name/node_json/<node_id>
-test url : http://domain_name/node_json/<node_id>?key=<api_key>
+test url : http://domain_name/node_json/<node_id>
 
 REQUIREMENTS
 ------------
